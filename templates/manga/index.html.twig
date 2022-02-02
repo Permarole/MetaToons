@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Manga index{% endblock %}
+
+{% block body %}
+    <h1>Manga index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Image</th>
+                <th>OnGoing</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for manga in mangas %}
+            <tr>
+                <td>{{ manga.id }}</td>
+                <td>{{ manga.title }}</td>
+                <td>{{ manga.author }}</td>
+                <td>{{ manga.image }}</td>
+                <td>{{ manga.onGoing ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('manga_show', {'id': manga.id}) }}">show</a>
+                    <a href="{{ path('manga_edit', {'id': manga.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('manga_new') }}">Create new</a>
+{% endblock %}

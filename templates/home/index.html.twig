@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    <main class="container d-flex">
+        <div class="row">
+            {% for manga in mangas %}
+                <div class="manga-container border col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="container"><img class="img-fluid" src='{{manga.0.image}}' alt='{{manga.0.title}}'></div>
+                    <ul>
+                        <li>{{manga.0.title}}</li>
+                        <li>{{manga.0.author}}</li>
+                        <li>{{manga.1|date("m/d/Y")}}</li>
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+
+{% endblock %}

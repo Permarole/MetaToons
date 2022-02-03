@@ -1,0 +1,68 @@
+$primary: rgb(236, 24, 24);
+$secondary: rgb(240, 240, 240);
+$dark: rgb(231, 231, 231);
+$black: rgb(24, 9, 9);
+$gradient: linear-gradient(90deg, rgb(252, 160, 160), rgb(236, 24, 24));
+
+$position-values: (
+    0: 0,
+    1: 10px,
+    3: 30px,
+    50: 50%,
+    100: 100%,
+);
+
+a {
+    color: black !important;
+    text-decoration: none !important;
+}
+
+a:hover {
+    color: $primary !important;
+}
+
+.chapter {
+    font-size: 8pt !important;
+}
+
+main {
+    flex-grow: 1 !important;
+}
+
+body {
+    min-height: 100vh !important;
+}
+
+footer {
+    width: 100% !important;
+    min-height: 200px !important;
+}
+
+.manga-container {
+    position: relative;
+}
+
+.img-container {
+    width: 100% !important;
+}
+
+.img-container > img {
+    aspect-ratio: 2/3 !important;
+}
+
+.watchList {
+    top: 10px;
+    left: 10px;
+}
+
+.active {
+    background-image: $gradient !important;
+}
+
+
+.watchListButton {
+    width: 40px;
+    height: 40px;
+}
+
+@import "~bootstrap/scss/bootstrap";

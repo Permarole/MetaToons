@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %} {% block title %}Manga{% endblock %} {% block
+body %}
+<main class="container bg-white">
+    <h1>Manga</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Title</th>
+                <td>{{ manga.title }}</td>
+            </tr>
+            <tr>
+                <th>Author</th>
+                <td>{{ manga.author }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><img src="{{ manga.image }}" alt="" /></td>
+            </tr>
+            <tr>
+                <th>OnGoing</th>
+                <td>{{ manga.onGoing ? "Yes" : "No" }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('home') }}">back to list</a>
+</main>
+
+{% endblock %}

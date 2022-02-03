@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Manga;
 use App\Form\MangaType;
+use App\Repository\ChapterRepository;
 use App\Repository\MangaRepository;
+use App\Repository\WatchListRepository;
+use App\Service\CalculRelease;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -98,13 +101,56 @@ class MangaController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(MangaRepository $mangaRepository): Response
+    public function index(): Response
     {
+        return $this->redirectToRoute('manga_index_alpha', ['letter' => 'A']);
+    }
 
-        $mangas = $mangaRepository->findAll();
+    /**
+     * @Route("/index/alpha/{letter}", name="index_alpha")
+     */
+    public function alpha(string $letter,
+    MangaRepository $mangaRepository,
+    ChapterRepository $chapterRepository,
+    WatchListRepository $watchListRepository,
+    CalculRelease $calculRelease)
+    {
+        $allmangas = $mangaRepository->findByLetter($letter);
+        $user = $this->getUser();
+
+        $watchList = $watchListRepository->findBy(['user' => $user]);
+        
+        $mangasOrder = [];
+        foreach ($allmangas as $manga) {
+
+            $lastChapter = $chapterRepository->findlast($manga->getId());
+            $mangasOrder[$manga->getId()] = $lastChapter->getReleaseDate();
+        }
+
+        $letters = [];
+
+        foreach(range('A', 'Z') as $let){
+            $letters[] = $let;
+        }
+
+        $mangas = [];
+        foreach ($mangasOrder as $key => $date) {
+            for($i = 0; $i < count($allmangas); $i++){
+                if($allmangas[$i]->getId() === $key){
+                    $new = $calculRelease->isNew($date);
+                    $mangas[] = [$allmangas[$i], $lastChapter, $new]; 
+                }
+            }
+            
+        }
 
         return $this->render('manga/index.html.twig', [
             'mangas' => $mangas,
+            'user' => $user,
+            'watchList' => $watchList,
+            'letters' => $letters,
+            'letter' => $letter
+
         ]);
     }
 }

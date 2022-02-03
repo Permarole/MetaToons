@@ -1,40 +1,63 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Manga index{% endblock %}
-
+{% block title %}Manga index
+{% endblock %}
 {% block body %}
-    <h1>Manga index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Image</th>
-                <th>OnGoing</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for manga in mangas %}
-            <tr>
-                <td>{{ manga.id }}</td>
-                <td>{{ manga.title }}</td>
-                <td>{{ manga.author }}</td>
-                <td>{{ manga.image }}</td>
-                <td>{{ manga.onGoing ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('manga_show', {'slug': manga.slug}) }}">show</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('manga_new') }}">Create new</a>
+	<main class="container d-flex flex-column">
+		<section class="d-flex flex-column align-items-center">
+			<div class="index mt-2">
+				{% for letter in letters %}
+					<a class="fs-2 mx-1" href="{{path('manga_index_alpha', {"letter": letter})}}">{{letter}}</a>
+				{% endfor %}
+                <hr>
+			</div>
+		</section>
+		<section class="d-flex flex-column row justify-content-center ">
+			<h1 class="text-center">Manga on letter :
+				{{ letter }}</h1>
+			<hr class="m-3"/>
+			<div class="col-12 d-flex justify-content-center">
+            {% if mangas is not empty %}
+				{% for manga in mangas %}
+					<div class="manga-container rounded-3 bg-white shadow container-fluid border p-2 m-3 col-11 col-sm-5 col-md-5 col-lg-3">
+						{% include "_watchListButton.html.twig" %}
+						<div class="row">
+							<div class="container-fluid col-6">
+								<div class="img-container">
+									<img class="img-fluid" width="100%" src="{{manga.0.image}}" alt="{{manga.0.title}}"/>
+								</div>
+							</div>
+							<div class="col-6 d-flex flex-column">
+								<a href="{{ path('manga_show', {'slug': manga.0.slug}) }}">
+									<h3 class="fs-6">{{manga.0.title}}</h3>
+								</a>
+								<a href="{{ path('chapter_show', {'slug': manga.0.slug, 'chapter': manga[1].id }) }}">
+									<button class="btn btn-secondary chapter">
+										Chapter
+										{{ manga[1].number }}
+										{% if manga.2 %}
+											new
+										{% endif %}
+									</button>
+								</a>
+								{% if manga[1].number > 1 %}
+									<a href="{{ path('chapter_show', {'slug': manga.0.slug, 'chapter': manga[1].id -1 }) }}">
+										<button class="btn btn-secondary mt-1 chapter">
+											Chapter
+											{{ manga[1].number - 1 }}
+											{% if manga.2 %}
+												new
+											{% endif %}
+										</button>
+									</a>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+                {% else %}
+                    <h3 class="text-center">Too bad !No manga for this letter ! :'(</h3>
+                {% endif %}
+			</div>
+		</section>
+	</main>
 {% endblock %}

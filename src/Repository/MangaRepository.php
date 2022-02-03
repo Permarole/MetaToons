@@ -19,6 +19,16 @@ class MangaRepository extends ServiceEntityRepository
         parent::__construct($registry, Manga::class);
     }
 
+    public function findByLetter(string $letter)
+    {
+        $letter = "$letter%";
+        return $this->createQueryBuilder('m')
+        ->andWhere("m.title LIKE :letter")
+        ->setParameter('letter', $letter)
+        ->getQuery()
+        ->getResult();
+    }
+
     // /**
     //  * @return Manga[] Returns an array of Manga objects
     //  */

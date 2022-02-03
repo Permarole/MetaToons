@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ChapterController extends AbstractController
 {
     /**
-     * @Route("/{slug}/{chapter}", name="chapter_show")
+     * @Route("/chapter/{slug}/{chapter}", name="chapter_show")
      */
     public function index(Manga $manga, Chapter $chapter): Response
     {

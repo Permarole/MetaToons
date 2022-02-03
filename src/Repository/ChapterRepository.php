@@ -19,7 +19,7 @@ class ChapterRepository extends ServiceEntityRepository
         parent::__construct($registry, Chapter::class);
     }
 
-    public function findLast(int $manga)
+    public function findLast(int $manga): ?Chapter
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.manga = :val')
@@ -27,7 +27,7 @@ class ChapterRepository extends ServiceEntityRepository
             ->orderBy('c.releaseDate', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
-            ->getResult()
+            ->getResult()[0]
         ;
     }
 

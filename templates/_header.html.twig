@@ -1,0 +1,53 @@
+<header class="container-fluid position-relative shadow bg-primary bg-gradient d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-1 border-bottom">
+	<div>
+		<a href="{{ path('home') }}">
+			<img src="https://upload.wikimedia.org/wikipedia/fr/thumb/7/72/Mangas_%282015%29.svg/1200px-Mangas_%282015%29.svg.png" alt="" width="100" height="100" class="m-5 d-inline-block align-top"/>
+		</a>
+	</div>
+	<nav class="navbar navbar-expand-lg navbar-light">
+		<div class="container-fluid">
+			<button class="navbar-toggler position-fixed top-1 end-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-column flex-lg-row">
+					<li class="nav-item">
+						<a class="nav-link fs-3 me-5" href="{{ path('home') }}">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link fs-3 me-5" href="{{ path('manga_index') }}">All mangas</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link fs-3 me-5" href="{{ path('manga_genre') }}">Genre</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link fs-3" href="{{ path('user_home') }}">Your Dashboard</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="mb-3">
+		{% if user is defined and user is not empty %}
+			<h3>Hello
+				{{ user.pseudo }}
+				!</h3>
+			<a href=" {{ path('app_logout') }} ">
+				<button class="btn btn-secondary float-end rounded-pill">
+					<span class="glyphicon glyphicon-log-in"></span>Logout
+				</button>
+			</a>
+		{% else %}
+			<a href=" {{ path('app_register') }} ">
+				<button class="btn btn-secondary rounded-pill">
+					<span class="glyphicon glyphicon-user"></span>Sign Up
+				</button>
+			</a>
+			<a href=" {{ path('login') }} ">
+				<button class="btn btn-secondary rounded-pill">
+					<span class="glyphicon glyphicon-log-in"></span>Login
+				</button>
+			</a>
+		{% endif %}
+	</div>
+</header>

@@ -1,0 +1,7 @@
+{% if user is not empty %}
+	<div class="watchlist position-absolute top-1 start-1" id="div_{{manga.0.id}}">
+		<button class="watchListButton rounded-3 {% for element in watchList %} {% if element.manga.id == manga.0.id %} active {% endif %} {% endfor %}" id="button_{{manga.0.id}}">
+			<img class="img-fluid pe-none" src="https://cdn-icons-png.flaticon.com/512/3867/3867499.png" alt=""/>
+		</button>
+	</div>
+{% endif %}

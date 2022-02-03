@@ -3,12 +3,18 @@
 namespace App\DataFixtures;
 
 use App\Entity\Manga;
+use App\Service\Slugify;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class MangaFixtures extends Fixture implements DependentFixtureInterface
 {
+    private Slugify $slugify;
+
+    public function __construct(Slugify $slugify) {
+        $this->slugify = $slugify;
+    }
     public const MANGA = [
         0 => [
             'Full Metal Achemist',
@@ -81,6 +87,7 @@ class MangaFixtures extends Fixture implements DependentFixtureInterface
             $manga->setImage($mangaData[2]);
             $manga->setGenre($this->getReference($mangaData[3]));
             $manga->setOnGoing($mangaData[4]);
+            $manga->setSlug($this->slugify->generate($manga->getTitle()));
             $this->addReference('manga_' . $key, $manga);
             $manager->persist($manga);
             $manager->flush();

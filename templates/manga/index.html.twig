@@ -25,8 +25,7 @@
                 <td>{{ manga.image }}</td>
                 <td>{{ manga.onGoing ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('manga_show', {'id': manga.id}) }}">show</a>
-                    <a href="{{ path('manga_edit', {'id': manga.id}) }}">edit</a>
+                    <a href="{{ path('manga_show', {'slug': manga.slug}) }}">show</a>
                 </td>
             </tr>
         {% else %}

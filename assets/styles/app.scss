@@ -1,7 +1,14 @@
 $primary: rgb(236, 24, 24);
-$secondary: grey;
+$secondary: rgb(240, 240, 240);
+$dark: rgb(214, 214, 214);
 
 $gradient: linear-gradient(90deg, rgb(252, 160, 160), rgb(236, 24, 24));
 
+a {
+    color: black !important;
+}
 
+a::hover {
+    color: $primary !important;
+}
 @import "~bootstrap/scss/bootstrap";

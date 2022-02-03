@@ -1,31 +1,66 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>MetaToons - {% block title %}{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8"/>
+		<title>MetaToons -
+			{% block title %}{% endblock %}
+		</title>
+		<link
+		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>"/>
+		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+		{% block stylesheets %}
+			{{
+            encore_entry_link_tags("app")
+        }}
+		{% endblock %}
+		{% block javascripts %}
+			{{
+            encore_entry_script_tags("app")
+        }}
+		{% endblock %}
+	</head>
+	<body class="bg-dark">
+		<header class="container-fluid bg-primary bg-gradient d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom">
+			<div>
+				<a href="{{ path('home') }}">
+					<img src="https://upload.wikimedia.org/wikipedia/fr/thumb/7/72/Mangas_%282015%29.svg/1200px-Mangas_%282015%29.svg.png" alt="" width="100" height="100" class="m-5 d-inline-block align-top"/>
+				</a>
+			</div>
+			<nav>
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex">
+					<li class="nav-item">
+						<a class="nav-link fs-3" href="{{ path('home') }}">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link fs-3" href="{{ path('manga_index') }}">All mangas</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link fs-3" href="{{ path('manga_genre') }}">Genre</a>
+					</li>
+				</ul>
+			</nav>
+			<div>
+				<a href=" {{ path('app_register') }} ">
+					<button>
+						<span class="glyphicon glyphicon-user"></span>Sign Up
+					</button>
+				</a>
+				{% if user is defined and user is not empty %}
+					<a href=" {{ path('app_logout') }} ">
+						<button>
+							<span class="glyphicon glyphicon-log-in"></span>Logout
+						</button>
+					</a>
+				{% else %}
+					<a href=" {{ path('login') }} ">
+						<button>
+							<span class="glyphicon glyphicon-log-in"></span>Login
+						</button>
+					</a>
+				{% endif %}
+			</div>
+		</header>
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        <header class="container-fluid bg-primary bg-gradient">
-            <div>
-                <a href="{{path('home')}}">
-                    <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/7/72/Mangas_%282015%29.svg/1200px-Mangas_%282015%29.svg.png" alt="" width="100" height="100" class="m-5 d-inline-block align-top">
-                </a>
-                </div>
-            <div>
-                <ul class="list-group">
-                    <li class="list-group-item"><a href="{{path('home')}}">Home</a></li>
-                </ul>
-            </div>
-        </header>
-        {% block body %}{% endblock %}
-    </body>
+		{% block body %}{% endblock %}
+	</body>
 </html>

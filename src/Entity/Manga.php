@@ -20,7 +20,7 @@ class Manga
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $title;
 
@@ -54,6 +54,11 @@ class Manga
      * @ORM\OneToMany(targetEntity=Reviews::class, mappedBy="manga")
      */
     private $reviews;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -182,6 +187,18 @@ class Manga
                 $review->setManga(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

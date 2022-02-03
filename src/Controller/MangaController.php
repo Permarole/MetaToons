@@ -11,23 +11,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 /**
- * @Route("/manga")
- */
+     * @Route("/manga", name="manga_")
+     */
 class MangaController extends AbstractController
 {
     /**
-     * @Route("/", name="manga_index", methods={"GET"})
-     */
-    public function index(MangaRepository $mangaRepository): Response
-    {
-        return $this->render('manga/index.html.twig', [
-            'mangas' => $mangaRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/new", name="manga_new", methods={"GET", "POST"})
+     * @Route("/new", name="new", methods={"GET", "POST"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -49,7 +40,20 @@ class MangaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="manga_show", methods={"GET"})
+     * @Route("/genre", name="genre")
+     */
+    public function genre(MangaRepository $mangaRepository): Response
+    {
+
+        $mangas = $mangaRepository->findAll();
+
+        return $this->render('manga/index.html.twig', [
+            'mangas' => $mangas,
+        ]);
+    }
+
+    /**
+     * @Route("/{slug}", name="show", methods={"GET"})
      */
     public function show(Manga $manga): Response
     {
@@ -59,7 +63,7 @@ class MangaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="manga_edit", methods={"GET", "POST"})
+     * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Manga $manga, EntityManagerInterface $entityManager): Response
     {
@@ -79,7 +83,7 @@ class MangaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="manga_delete", methods={"POST"})
+     * @Route("/{id}", name="delete", methods={"POST"})
      */
     public function delete(Request $request, Manga $manga, EntityManagerInterface $entityManager): Response
     {
@@ -89,5 +93,18 @@ class MangaController extends AbstractController
         }
 
         return $this->redirectToRoute('manga_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/", name="index")
+     */
+    public function index(MangaRepository $mangaRepository): Response
+    {
+
+        $mangas = $mangaRepository->findAll();
+
+        return $this->render('manga/index.html.twig', [
+            'mangas' => $mangas,
+        ]);
     }
 }
